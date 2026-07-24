@@ -17,8 +17,8 @@ WORKDIR /app
 # Copy the published output
 COPY --from=build /app/out ./
 
-# Expose port (Render uses 10000 by default, but 5000 internally)
-ENV ASPNETCORE_URLS=http://+:5132
-EXPOSE 5132
+# Render provides the PORT environment variable
+ENV ASPNETCORE_URLS=http://+:$PORT
+EXPOSE 10000
 
 ENTRYPOINT ["dotnet", "Cars24API.dll"]
