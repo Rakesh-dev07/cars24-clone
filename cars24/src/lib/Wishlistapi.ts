@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5203/api/Wishlist";
+const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/Wishlist`;
 
 export const getWishlist = async (userId: string) => {
   const response = await fetch(`${BASE_URL}/${userId}`);

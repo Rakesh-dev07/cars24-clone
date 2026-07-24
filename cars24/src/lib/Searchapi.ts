@@ -1,4 +1,4 @@
-const API = "http://localhost:5203/api/search";
+const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/search`;
 
 export async function searchCars(params: {
   query?: string;
@@ -53,7 +53,7 @@ export async function searchCars(params: {
     searchParams.append("page", params.page.toString());
 
   const response = await fetch(
-    `${API}?${searchParams.toString()}`
+    `${BASE_URL}?${searchParams.toString()}`
   );
 
   if (!response.ok)
@@ -66,7 +66,7 @@ export async function getSuggestions(query: string) {
   if (!query.trim()) return [];
 
   const response = await fetch(
-    `${API}/suggestions?query=${encodeURIComponent(query)}`
+    `${BASE_URL}/suggestions?query=${encodeURIComponent(query)}`
   );
 
   if (!response.ok) {
