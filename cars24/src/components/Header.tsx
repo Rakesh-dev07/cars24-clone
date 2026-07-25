@@ -13,8 +13,6 @@ import {
   ChevronDown,
   X,
   MapPin,
-  CheckCircle,
-    LocateFixed,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -254,6 +252,27 @@ const Header = () => {
               )}
             </div>
 
+            {/* City Selector */}
+            <div className="px-6 py-4 border-b">
+              <button
+                onClick={() => {
+                  setCityModalOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center justify-between w-full rounded-lg border px-4 py-3 hover:bg-gray-50"
+              >
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-blue-600" />
+                  <div className="text-left">
+                    <p className="text-xs text-gray-500">Location</p>
+                    <p className="font-medium text-gray-900">{selectedCity}</p>
+                  </div>
+                </div>
+
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+
             {/* Navigation */}
 
             <div className="flex-1 overflow-y-auto">
@@ -329,10 +348,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      <CityModal
-  open={cityModalOpen}
-  onClose={() => setCityModalOpen(false)}
-/>
+      <CityModal open={cityModalOpen} onClose={() => setCityModalOpen(false)} />
     </header>
   );
 };

@@ -1,148 +1,327 @@
-Here's a complete `README.md` file for your project that has a **Next.js frontend** and a **.NET backend** in the same repository:
+# 🚗 Cars24 Clone
+
+A production-style **Cars24 Clone** built using **Next.js**, **ASP.NET Core Web API**, and **MongoDB**.
+
+The project replicates the core Cars24 experience while implementing several advanced features such as **smart search**, **city-based geo-filtering**, **dynamic pricing**, **wishlist**, **authentication**, and **vehicle booking**.
 
 ---
 
-### 📄 `README.md`
+## 🌐 Live Demo
 
-```markdown
-# 🚀 Fullstack Web Application
+### Frontend
+https://cars24-clone-lemon.vercel.app
 
-This is a fullstack web application built using:
-
-- **Frontend:** [Next.js](https://nextjs.org/)
-- **Backend:** [.NET Core Web API](https://dotnet.microsoft.com/en-us/apps/aspnet)
+### Backend API
+https://cars24-clone-2lbm.onrender.com
 
 ---
 
-## 📁 Project Structure
+# 📷 Preview
 
+> Add screenshots here
+
+- Home Page
+- Buy Used Cars
+- New Cars
+- Car Details
+- Wishlist
+- Login
+- City Selector
+
+---
+
+# ✨ Features
+
+## 🚘 Vehicle Marketplace
+
+- Buy Used Cars
+- Browse New Cars
+- Car Details Page
+- Vehicle Booking
+- Wishlist
+- User Authentication
+
+---
+
+## 🔍 Smart Search
+
+- Keyword Search
+- Auto Suggestions
+- Brand Filter
+- Fuel Filter
+- Transmission Filter
+- Year Filter
+- Price Filter
+- City Filter
+- Search Ranking
+
+---
+
+## 📍 Geo-fencing
+
+- City selector in Navbar
+- Default location is **India**
+- Filters cars based on selected city
+- Dynamic search updates
+
+---
+
+## 💰 Dynamic Pricing
+
+Recommended Price is calculated dynamically based on:
+
+- City
+- Vehicle Category
+- Demand
+- Seasonal Logic
+
+instead of storing static values inside MongoDB.
+
+---
+
+## ❤️ User Features
+
+- Login
+- Signup
+- Profile
+- Wishlist
+- Book Vehicle
+- Book Appointment
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Context API
+
+---
+
+## Backend
+
+- ASP.NET Core Web API (.NET 9)
+- REST APIs
+- MongoDB Driver
+- Dependency Injection
+
+---
+
+## Database
+
+- MongoDB Atlas
+
+---
+
+## Deployment
+
+- Vercel
+- Render
+- Docker
+
+---
+
+# 📂 Project Structure
+
+```text
+cars24-clone
+│
+├── Cars24API
+│   ├── Controllers
+│   ├── Models
+│   ├── Services
+│   ├── Seed
+│   ├── Program.cs
+│   └── Dockerfile
+│
+└── cars24
+    ├── components
+    ├── context
+    ├── pages
+    ├── services
+    └── styles
 ```
 
-root/
-├── frontend/     # Next.js application
-├── backend/      # .NET Core Web API
-├── .gitignore
-├── README.md
-
-````
-
 ---
 
-## 🖥️ Live Demo
+# 🚀 Getting Started
 
-Frontend: [https://your-frontend-url](https://your-frontend-url)  
-Backend API: [https://your-backend-url](https://your-backend-url)
-
----
-
-## 📦 Setup Instructions
-
-### ✅ Prerequisites
-
-- Node.js and npm installed
-- .NET 6+ installed
-- Git installed
-
----
-
-## 🧱 Frontend (Next.js)
-
-### 📍 Location: `/frontend`
-
-### 🔧 Setup
+## Clone Repository
 
 ```bash
-cd frontend
-npm install
-````
-
-### ▶️ Run Locally
-
-```bash
-npm run dev
-```
-
-### ⚙️ Build for Production
-
-```bash
-npm run build
-npm run start
+git clone https://github.com/Rakesh-dev07/cars24-clone.git
+cd cars24-clone
 ```
 
 ---
 
-## ⚙️ Backend (.NET Core API)
-
-### 📍 Location: `/backend`
-
-### 🔧 Setup
+# Backend
 
 ```bash
-cd backend
+cd Cars24API
+
 dotnet restore
-```
 
-### ▶️ Run Locally
-
-```bash
 dotnet run
 ```
 
-The API should be available at `http://localhost:5132` or the port configured in `launchSettings.json`.
-
 ---
 
-## 🚀 Deployment
-
-### 📌 Render
-
-* Frontend and backend can be deployed separately using Docker or Render's native build system.
-* Make sure each has a `render.yaml` or a service set up.
-* Ensure the backend is bound to port `5132` or use `PORT` env variable in Render.
-
----
-
-## 📂 .gitignore
-
-Make sure the `.gitignore` file excludes:
+# Frontend
 
 ```bash
-# Node
-node_modules
-.next
-.env
+cd cars24
 
-# DotNet
-bin/
-obj/
-appsettings.Development.json
-appsettings.Local.json
+npm install
+
+npm run dev
 ```
 
 ---
 
-## 🛠️ Environment Variables
+# ⚙ Environment Variables
 
-You can use `.env` files to manage secrets:
-
-### Frontend `.env`
+## Frontend (.env.local)
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend-url/api
+NEXT_PUBLIC_API_URL=http://localhost:5203/api
 ```
 
-### Backend `appsettings.json`
+Production
 
-Configure your connection strings, API keys, etc., here.
+```env
+NEXT_PUBLIC_API_URL=https://cars24-clone-2lbm.onrender.com/api
+```
 
 ---
 
-## 👨‍💻 Authors
+## Backend
 
-* [Bithead](https://github.com/BitHeadmr)
+Configure MongoDB inside
 
+```
+appsettings.Development.json
+```
+
+Production uses Render Environment Variables.
 
 ---
 
-Let me know if you want this customized with your project name, GitHub URL, or actual render deployment links.
+# 🌱 Seed Demo Data
+
+Populate demo cars using
+
 ```
+GET /api/seed
+```
+
+This inserts demo vehicles into MongoDB for testing.
+
+---
+
+# 📌 API Endpoints
+
+## Cars
+
+```
+GET /api/car/{id}
+
+GET /api/car/summaries
+
+POST /api/car
+```
+
+---
+
+## Search
+
+```
+GET /api/search
+
+GET /api/search/suggestions
+```
+
+---
+
+## Authentication
+
+```
+POST /api/auth/login
+
+POST /api/auth/signup
+```
+
+---
+
+# 🏗 Architecture
+
+```
+Next.js Frontend
+        │
+        ▼
+ASP.NET Core REST API
+        │
+        ▼
+MongoDB Atlas
+```
+
+---
+
+# 🎯 Internship Features Implemented
+
+✅ Advanced Search
+
+✅ Auto Suggestions
+
+✅ Smart Filters
+
+✅ City Geo-fencing
+
+✅ Dynamic Recommended Pricing
+
+✅ Used Cars Module
+
+✅ New Cars Module
+
+✅ Wishlist
+
+✅ Authentication
+
+✅ Booking Flow
+
+---
+
+# 🚀 Future Improvements
+
+- Google Maps Integration
+- Maintenance Cost Prediction
+- Push Notifications (Firebase)
+- Referral & Rewards System
+- Real-time Chat
+- Admin Dashboard
+
+---
+
+# 👨‍💻 Author
+
+### Rakesh Yadav
+
+Portfolio
+
+https://portfolio-red-three-22.vercel.app
+
+LinkedIn
+
+https://www.linkedin.com/in/contact-rakesh-yadav
+
+GitHub
+
+https://github.com/Rakesh-dev07
+
+---
+
+⭐ If you found this project interesting, consider giving it a star!
