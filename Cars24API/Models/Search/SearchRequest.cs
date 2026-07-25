@@ -11,6 +11,8 @@ namespace Cars24API.Models.Search
         public string? Transmission { get; set; }
 
         public string? Location { get; set; }
+        
+        public string? City { get; set; }
 
         public int? Year { get; set; }
 

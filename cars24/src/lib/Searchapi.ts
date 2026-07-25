@@ -6,6 +6,7 @@ export async function searchCars(params: {
   fuel?: string;
   transmission?: string;
   location?: string;
+  city?: string;
   year?: number;
   minKm?: number;
   maxKm?: number;
@@ -30,6 +31,9 @@ export async function searchCars(params: {
 
   if (params.location)
     searchParams.append("location", params.location);
+
+  if (params.city && params.city !== "India")
+  searchParams.append("city", params.city);
 
   if (params.year)
     searchParams.append("year", params.year.toString());

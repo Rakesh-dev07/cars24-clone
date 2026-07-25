@@ -4,6 +4,7 @@ import { Slider } from "@/components/ui/slider";
 import WishlistButton from "@/components/WishlistButton";
 import SearchBar from "@/components/Search/SearchBar";
 import { searchCars } from "@/lib/Searchapi";
+import { useCity } from "@/context/CityContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -50,6 +51,8 @@ function LoaderCard() {
 export default function BuyCarsPage() {
   const router = useRouter();
 
+  const { selectedCity } = useCity();
+
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,6 +79,8 @@ export default function BuyCarsPage() {
 
         transmission: selectedTransmission || undefined,
 
+        city: selectedCity,
+
         year: selectedYear ? Number(selectedYear) : undefined,
 
         minPrice: priceRange[0],
@@ -99,6 +104,8 @@ export default function BuyCarsPage() {
   }, [
     router.isReady,
     query,
+    
+    selectedCity,
 
     priceRange,
 

@@ -115,6 +115,18 @@ namespace Cars24API.Services
                     .ToList();
             }
 
+            // Filter by City
+            if (!string.IsNullOrWhiteSpace(request.City) &&
+                !request.City.Equals("India", StringComparison.OrdinalIgnoreCase))
+            {
+                cars = cars.Where(c =>
+                    c.City.Equals(
+                        request.City,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                ).ToList();
+            }
+
             // Filter by MinKm
             if (request.MinKm.HasValue)
             {
@@ -176,7 +188,7 @@ namespace Cars24API.Services
                                 SearchScore.Calculate(car, request)
                                 + await _popularityScore.CalculateAsync(car.Id!)
                         })
-                    
+
                     ))
                     .OrderByDescending(x => x.Score)
                     .Select(x => x.Car)

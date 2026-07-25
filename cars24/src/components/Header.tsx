@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useCity } from "@/context/CityContext";
+import CityModal from "./CitySelector/CityModal";
 import {
   Calendar,
   Package,
@@ -10,6 +12,9 @@ import {
   User,
   ChevronDown,
   X,
+  MapPin,
+  CheckCircle,
+    LocateFixed,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -34,7 +39,11 @@ const Header = () => {
     { label: "My Bookings", icon: Package, link: "/bookings" },
     { label: "My Orders", icon: FileText, link: "/Upcoming/orders" },
     { label: "Resources", icon: FileText, link: "/Upcoming/resources" },
-    { label: "RC Transfer Status", icon: FileText, link: "/Upcoming/rc-transfer" },
+    {
+      label: "RC Transfer Status",
+      icon: FileText,
+      link: "/Upcoming/rc-transfer",
+    },
     { label: "Become Our Partner", icon: Users, link: "/Upcoming/partner" },
     { label: "FAQ", icon: HelpCircle, link: "/Upcoming/faq" },
   ];
@@ -47,6 +56,8 @@ const Header = () => {
   //   created_at: new Date().toISOString(),
   // };
   const { user, signOut } = useAuth();
+  const { selectedCity } = useCity();
+  const [cityModalOpen, setCityModalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -89,6 +100,16 @@ const Header = () => {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
+          <button
+            onClick={() => setCityModalOpen(true)}
+            className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+          >
+            <MapPin className="w-4 h-4 text-blue-600" />
+
+            <span>{selectedCity}</span>
+
+            <ChevronDown className="w-4 h-4" />
+          </button>
           <Link href="/wishlist">
             <Button
               variant="ghost"
@@ -176,188 +197,142 @@ const Header = () => {
         </div>
       </nav>
       {/* Mobile Menu */}
-{mobileMenuOpen && (
-  <div className="fixed inset-0 z-50 lg:hidden">
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          />
 
-    {/* Backdrop */}
-    <div
-      className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-      onClick={() => setMobileMenuOpen(false)}
-    />
+          {/* Drawer */}
+          <div className="absolute right-0 top-0 h-full w-[85%] max-w-[340px] bg-white shadow-2xl flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                <div className="flex items-center">
+                  <span className="bg-blue-600 text-white font-bold py-2 px-3 rounded-lg text-xl">
+                    CARS
+                  </span>
+                  <span className="text-orange-500 font-bold text-xl ml-1">
+                    24
+                  </span>
+                </div>
+              </Link>
 
-    {/* Drawer */}
-    <div className="absolute right-0 top-0 h-full w-[85%] max-w-[340px] bg-white shadow-2xl flex flex-col">
-
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-5 border-b">
-
-        <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-          <div className="flex items-center">
-            <span className="bg-blue-600 text-white font-bold py-2 px-3 rounded-lg text-xl">
-              CARS
-            </span>
-            <span className="text-orange-500 font-bold text-xl ml-1">
-              24
-            </span>
-          </div>
-        </Link>
-
-        <button
-          onClick={() => setMobileMenuOpen(false)}
-          className="rounded-full p-2 hover:bg-gray-100"
-        >
-          <X className="w-6 h-6 text-gray-600" />
-        </button>
-
-      </div>
-
-      {/* User */}
-
-      <div className="px-6 py-5 border-b">
-
-        {user ? (
-
-          <div className="flex items-center gap-4">
-
-            <div className="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold uppercase">
-
-              {user.fullName.charAt(0)}
-
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-full p-2 hover:bg-gray-100"
+              >
+                <X className="w-6 h-6 text-gray-600" />
+              </button>
             </div>
 
-            <div>
+            {/* User */}
 
-              <h3 className="font-semibold text-gray-900">
+            <div className="px-6 py-5 border-b">
+              {user ? (
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold uppercase">
+                    {user.fullName.charAt(0)}
+                  </div>
 
-                {user.fullName}
+                  <div>
+                    <h3 className="font-semibold text-gray-900">
+                      {user.fullName}
+                    </h3>
 
-              </h3>
-
-              <p className="text-sm text-gray-500">
-
-                {user.email}
-
-              </p>
-
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    Login / Signup
+                  </Button>
+                </Link>
+              )}
             </div>
 
+            {/* Navigation */}
+
+            <div className="flex-1 overflow-y-auto">
+              <div className="py-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-6 py-4 text-[16px] font-medium text-gray-800 hover:bg-gray-100"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+
+              <div className="border-t my-2" />
+
+              <Link
+                href="/wishlist"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-4 px-6 py-4 text-gray-800 hover:bg-gray-100"
+              >
+                <Heart className="w-5 h-5 text-red-500" />
+
+                <span className="font-medium">Wishlist</span>
+              </Link>
+
+              {user && (
+                <Link
+                  href="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center text-gray-800 gap-4 px-6 py-4 hover:bg-gray-100"
+                >
+                  <User className="w-5 h-5 text-blue-600" />
+
+                  <span className="font-medium">Profile</span>
+                </Link>
+              )}
+
+              <div className="border-t my-2" />
+
+              {menuItems.map(({ label, icon: Icon, link }) => (
+                <Link
+                  key={label}
+                  href={link}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
+                >
+                  <Icon className="w-5 h-5 text-gray-500" />
+
+                  <span className="text-gray-700">{label}</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Bottom */}
+
+            {user && (
+              <div className="border-t p-5">
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => {
+                    signOut();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
           </div>
-
-        ) : (
-
-          <Link
-            href="/login"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <Button className="w-full bg-orange-500 hover:bg-orange-600">
-
-              Login / Signup
-
-            </Button>
-          </Link>
-
-        )}
-
-      </div>
-
-      {/* Navigation */}
-
-      <div className="flex-1 overflow-y-auto">
-
-        <div className="py-2">
-
-          {navItems.map((item) => (
-
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-4 text-[16px] font-medium text-gray-800 hover:bg-gray-100"
-            >
-              {item.name}
-            </Link>
-
-          ))}
-
         </div>
-
-        <div className="border-t my-2" />
-
-        <Link
-          href="/wishlist"
-          onClick={() => setMobileMenuOpen(false)}
-          className="flex items-center gap-4 px-6 py-4 text-gray-800 hover:bg-gray-100"
-        >
-          <Heart className="w-5 h-5 text-red-500" />
-
-          <span className="font-medium">Wishlist</span>
-
-        </Link>
-
-        {user && (
-
-          <Link
-            href="/profile"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center text-gray-800 gap-4 px-6 py-4 hover:bg-gray-100"
-          >
-            <User className="w-5 h-5 text-blue-600" />
-
-            <span className="font-medium">Profile</span>
-
-          </Link>
-
-        )}
-
-        <div className="border-t my-2" />
-
-        {menuItems.map(({ label, icon: Icon, link }) => (
-
-          <Link
-            key={label}
-            href={link}
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
-          >
-            <Icon className="w-5 h-5 text-gray-500" />
-
-            <span className="text-gray-700">
-
-              {label}
-
-            </span>
-
-          </Link>
-
-        ))}
-
-      </div>
-
-      {/* Bottom */}
-
-      {user && (
-
-        <div className="border-t p-5">
-
-          <Button
-            variant="destructive"
-            className="w-full"
-            onClick={() => {
-              signOut();
-              setMobileMenuOpen(false);
-            }}
-          >
-            Logout
-          </Button>
-
-        </div>
-
       )}
-
-    </div>
-
-  </div>
-)}
+      <CityModal
+  open={cityModalOpen}
+  onClose={() => setCityModalOpen(false)}
+/>
     </header>
   );
 };
