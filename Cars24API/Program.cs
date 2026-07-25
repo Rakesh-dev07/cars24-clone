@@ -24,6 +24,7 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<CarService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<Cars24API.Services.Search.PopularityScore>();
+builder.Services.AddSingleton<DynamicPricingService>();
 builder.Services.AddSingleton<BookingService>();
 builder.Services.AddSingleton<AppointmentService>();
 

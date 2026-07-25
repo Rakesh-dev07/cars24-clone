@@ -14,8 +14,10 @@ interface Car {
   title: string;
   images: string[];
   price: string;
+  recommendedPrice: string;
   emi: string;
   location: string;
+
   specs: {
     km: string;
     fuel: string;
@@ -104,7 +106,7 @@ export default function BuyCarsPage() {
   }, [
     router.isReady,
     query,
-    
+
     selectedCity,
 
     priceRange,
@@ -285,7 +287,13 @@ export default function BuyCarsPage() {
                           <div className="text-right">
                             <div className="text-sm text-gray-500">Price</div>
 
-                            <div className="font-semibold">{car.price}</div>
+                            <div className="font-semibold">
+                              <p className="text-lg font-bold">{car.price}</p>
+
+                              <p className="text-green-600 font-semibold text-sm">
+                                ⭐ Recommended: {car.recommendedPrice}
+                              </p>
+                            </div>
                           </div>
                         </div>
 

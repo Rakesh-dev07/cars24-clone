@@ -20,6 +20,7 @@ public class Car
     public List<string> Images { get; set; } = new List<string>();
     public string Title { get; set; } = string.Empty;
     public string Price { get; set; } = string.Empty;
+    public string RecommendedPrice { get; set; } = string.Empty;
     public string Emi { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;

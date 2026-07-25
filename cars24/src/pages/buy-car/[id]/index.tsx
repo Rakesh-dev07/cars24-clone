@@ -176,7 +176,18 @@ const index = () => {
                   <p className="text-3xl font-bold text-blue-600">
                     {carDetails.price}
                   </p>
-                  <p className="text-gray-600">EMI from {carDetails.emi}</p>
+
+                  <p className="text-green-600 font-semibold mt-1">
+                    ⭐ Recommended Price: {carDetails.recommendedPrice}
+                  </p>
+
+                  <p className="text-xs text-gray-500">
+                    Based on city demand and seasonal trends
+                  </p>
+
+                  <p className="text-gray-600 mt-2">
+                    EMI from {carDetails.emi}
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-gray-600">{carDetails.location}</p>

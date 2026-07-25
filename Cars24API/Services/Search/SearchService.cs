@@ -11,8 +11,9 @@ namespace Cars24API.Services
     {
         private readonly IMongoCollection<Car> _cars;
         private readonly PopularityScore _popularityScore;
+        private readonly DynamicPricingService _dynamicPricingService;
 
-        public SearchService(IConfiguration config, PopularityScore popularityScore)
+        public SearchService(IConfiguration config, PopularityScore popularityScore, DynamicPricingService dynamicPricingService)
         {
             var client = new MongoClient(config.GetConnectionString("Cars24DB"));
 
@@ -21,6 +22,8 @@ namespace Cars24API.Services
             _cars = database.GetCollection<Car>("Cars");
 
             _popularityScore = popularityScore;
+
+            _dynamicPricingService = dynamicPricingService;
         }
 
         public async Task<List<string>> GetSuggestionsAsync(string query, int limit = 8)
@@ -203,6 +206,17 @@ namespace Cars24API.Services
             var totalCount = cars.Count;
             var page = Math.Max(request.Page, 1);
             var pageSize = Math.Clamp(request.PageSize, 1, 100);
+
+            // Calculate dynamic recommended price
+            foreach (var car in cars)
+            {
+                car.RecommendedPrice =
+                    _dynamicPricingService.CalculateRecommendedPrice(
+                        car.Price,
+                        car.City,
+                        car.Title
+                    );
+            }
 
             return new SearchResult
             {
