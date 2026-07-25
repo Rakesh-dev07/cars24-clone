@@ -50,7 +50,7 @@ function LoaderCard() {
   );
 }
 
-export default function BuyCarsPage() {
+export default function NewCarsPage() {
   const router = useRouter();
 
   const { selectedCity } = useCity();
@@ -83,7 +83,7 @@ export default function BuyCarsPage() {
 
         city: selectedCity,
 
-        isNew: false,
+        isNew: true,
 
         year: selectedYear ? Number(selectedYear) : undefined,
 
@@ -212,7 +212,7 @@ export default function BuyCarsPage() {
                 >
                   <option value="">All</option>
 
-                  {[2025, 2024, 2023, 2022, 2021].map((year) => (
+                  {[2027, 2026, 2025].map((year) => (
                     <option key={year}>{year}</option>
                   ))}
                 </select>
@@ -224,7 +224,7 @@ export default function BuyCarsPage() {
 
           <div className="md:col-span-3">
             <div className="flex justify-between items-center mb-8">
-              <h1 className="text-3xl font-bold">Used Cars</h1>
+              <h1 className="text-3xl font-bold">New Cars</h1>
 
               <div className="flex gap-4">
                 <SearchBar
@@ -253,7 +253,7 @@ export default function BuyCarsPage() {
                 : cars.map((car) => (
                     <Link
                       key={car.id}
-                      href={`/buy-car/${car.id}`}
+                      href={`/new-cars/${car.id}`}
                       className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
                     >
                       <div className="relative h-56">

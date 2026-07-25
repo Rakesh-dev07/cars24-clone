@@ -129,6 +129,14 @@ namespace Cars24API.Services
                     )
                 ).ToList();
             }
+            
+            // Filter by IsNew
+            if (request.IsNew.HasValue)
+            {
+                cars = cars
+                    .Where(c => c.IsNew == request.IsNew.Value)
+                    .ToList();
+            }
 
             // Filter by MinKm
             if (request.MinKm.HasValue)

@@ -24,6 +24,7 @@ public class Car
     public string Emi { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
+    public bool IsNew { get; set; }
     public Specs Specs { get; set; } = new Specs();
     public List<string> Features { get; set; } = new List<string>();
     public List<string> Highlights { get; set; } = new List<string>();

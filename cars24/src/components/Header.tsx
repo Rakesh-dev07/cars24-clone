@@ -31,7 +31,7 @@ const Header = () => {
     { name: "Buy used car", href: "/buy-car" },
     { name: "Sell car", href: "/sell-car" },
     { name: "Car finance", href: "/Upcoming/finance" },
-    { name: "New cars", href: "/Upcoming/new-cars" },
+    { name: "New cars", href: "/new-cars" },
     { name: "Car services", href: "/Upcoming/car-services" },
   ];
   const menuItems = [

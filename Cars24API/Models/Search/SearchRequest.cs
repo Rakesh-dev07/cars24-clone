@@ -14,6 +14,8 @@ namespace Cars24API.Models.Search
         
         public string? City { get; set; }
 
+        public bool? IsNew { get; set; }
+
         public int? Year { get; set; }
 
         public int? MinKm { get; set; }
